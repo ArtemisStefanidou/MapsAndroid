@@ -4,8 +4,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.lang.String;
 
@@ -25,6 +23,11 @@ public class GeoHelper extends ContextWrapper {
         super(base);
     }
 
+    /**
+     * Όταν μπει ο χρήστης στο geofence τότε θα ενεργοποιηθεί και θα στείλει αν έκανε enter or exit
+     * @param geofence
+     * @return
+     */
     public GeofencingRequest getGeofencingRequest(Geofence geofence){
 
         return new GeofencingRequest.Builder()
@@ -33,16 +36,21 @@ public class GeoHelper extends ContextWrapper {
                 .build();
     }
 
+    /**
+     * Για δημιουργία κύκλου
+     */
     public Geofence getGeofence(String ID, LatLng latLng, float radius,int transitionTypes){
 
         return new Geofence.Builder()
                 .setCircularRegion(latLng.latitude,latLng.longitude,radius)
                 .setRequestId(ID)
-                .setTransitionTypes(transitionTypes)
+                .setTransitionTypes(transitionTypes)//σε ποια transitions να ακούει
                 .setLoiteringDelay(5000)//meta apo posa seconds uew na deijei oti px eisai mesa sthn perioxh
-                .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                .setExpirationDuration(Geofence.NEVER_EXPIRE) //για να υπάρχει ακόμα ο κύκλος και μετα το delay
                 .build();
     }
+
+
 
     public PendingIntent getPendingIntent(){
 

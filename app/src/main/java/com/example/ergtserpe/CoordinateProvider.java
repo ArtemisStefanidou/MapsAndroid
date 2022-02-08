@@ -12,18 +12,25 @@ import androidx.annotation.Nullable;
 import androidx.room.Room;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
-import java.util.ArrayList;
-import java.util.List;
+/**
+ * Provider --> τον χρειαζόμαστε για να μπορέσουμε να επικοινωνούμε με άλλες εφαρμοφές,στην ουσία
+ * να μπορέσει αυτή η εφαρμογή να διαθέση τις πληροφορίες της σε άλλες εφαρμογές
+ */
 
 public class CoordinateProvider extends ContentProvider {
     private UriMatcher uriMatcher;
     Context context;
 
+    //καλείται με το που θα τρέξει το πρόγραμμα
     @Override
     public boolean onCreate() {
+
+        //αρχικοποίηση uri
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI("com.example.ergtserpe","COORDINATE",1);
+        //δημιουργία του uri που θα "χτυπήσει" η δεύτερη εφαρμογή
+        uriMatcher.addURI(dbDetails.AUTHORITY,dbDetails.TABLE_NAME,dbDetails.DB_VERSION);
         return false;
+
     }
 
     @Nullable

@@ -87,7 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapLongClickListener(this);
     }
 
-    //auto einai gia to panv dejia koympaki poy se paei sthn topothesia tou user
+    /**-----Permissions-----*/
     private void enableUserLocation() {
         //BAGINEI ENA POP UPP STON XRHSTH KAI TON RVTAEI AN THELEI NA ENERGOPOIHSH THN TOPOUESIA TOY AN PEI NAI GINETAI TO PARAKATO
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -168,10 +168,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void addGeofence(LatLng latLng, float geofence_radius) {
 
-        //εδώ όπως ζητήθηκε και από την εκφώνηση καλώντας την μέθοδο στον helper μπορώ να πάρω τις συντεταγμένες του χρήστη όταν μπήκε ή βγήκε από το geofence
+
         Geofence geofence = geoHelper.getGeofence(GEOFENCE_ID, latLng, geofence_radius, Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT);
 
-        //
         GeofencingRequest geofencingRequest = geoHelper.getGeofencingRequest(geofence);
         PendingIntent pendingIntent = geoHelper.getPendingIntent();
 

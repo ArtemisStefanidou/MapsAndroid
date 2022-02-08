@@ -20,12 +20,14 @@ import java.util.List;
 public class GeoBroadcastReceiver extends BroadcastReceiver {
 
     private static final String TAG = "GeoBroadcastReceiver";
+
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast.
         Toast.makeText(context, "Geofence triggered...", Toast.LENGTH_SHORT).show();
 
+        /**----- Enter or Exit and the Coordinates-----*/
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
 
         if(geofencingEvent.hasError()){
@@ -33,19 +35,23 @@ public class GeoBroadcastReceiver extends BroadcastReceiver {
             return;
         }
 
+        /**-----LIST OF GEOFENCE-----*/
         List<Geofence> geofenceList = geofencingEvent.getTriggeringGeofences();
-        Log.d(TAG, String.valueOf(geofenceList));
+        //Log.d(TAG, String.valueOf(geofenceList));
+
+
+        /**-----FOR SELF DEBUG-----*/
         for(Geofence geofence:geofenceList){
             Log.d(TAG,"On Receive"+geofence.toString()+geofence.getRequestId());
         }
-        //Location location = geofencingEvent.getTriggeringLocation();//this location is not the center of the geofence but the point of trigger
+
+        /**----- Enter or Exit-----*/
         int transitionType = geofencingEvent.getGeofenceTransition();
 
+        /**-----Coordinates-----*/
         Location userLocation = geofencingEvent.getTriggeringLocation();
 
-        //new object CoordData to insert in DB
-
-
+        /**----- Create Coordinate Object for Insert in DB-----*/
         ControllerDB controller = Room.databaseBuilder(context,ControllerDB.class,"COORDINATE").build();
         CoordinateDAO coordinateDAO= controller.CoordinateDAO();
         Coordinate coordinate = new Coordinate();
@@ -74,17 +80,19 @@ public class GeoBroadcastReceiver extends BroadcastReceiver {
         t.start();
 
 
-
         switch (transitionType){
             case Geofence.GEOFENCE_TRANSITION_ENTER:
                 Toast.makeText(context, "Geofence transition enter", Toast.LENGTH_SHORT).show();
-                break;
-            case Geofence.GEOFENCE_TRANSITION_DWELL:
-                Toast.makeText(context, "Geofence transition dwell", Toast.LENGTH_SHORT).show();
                 break;
             case Geofence.GEOFENCE_TRANSITION_EXIT:
                 Toast.makeText(context, "Geofence transition exit", Toast.LENGTH_SHORT).show();
                 break;
         }
+
+        /**-----Close DataBase-----*/
+        controller.close();
     }
+
+
+
 }
