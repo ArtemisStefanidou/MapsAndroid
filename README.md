@@ -1,7 +1,7 @@
 # ergTserpe
 
-It is an application in the course "Mobile Application Development" στο οποίο όταν ο χρήστης μπει σε μία συγκεκριμένη γεωγραφική περιοχή 
-(την οποία θα την έχει ορίσει αυτός πατώντας παρατεταμένα στον χάρτη) θα του εμφανίζεται το αντίστοιχο μήνυμα.
+It is an application in the course "Mobile Application Development" in which when the user enters a specific geographical area
+(which he will have defined by clicking and holding on the map) the corresponding message will be displayed.
 
 #For Run
 
